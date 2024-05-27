@@ -1,0 +1,40 @@
+class Rectangle:
+    def __init__(self, x, y, w, h):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+    
+    def intersection(self, notself):
+        x_overlap = max(0, min(self.x + self.w, notself.x + notself.w) - max(self.x, notself.x))
+        y_overlap = max(0, min(self.y + self.h, notself.y + notself.h) - max(self.y, notself.y))
+        
+        if x_overlap == 0 or y_overlap == 0:
+            return None
+        else:
+            x_intersect = max(self.x, notself.x)
+            y_intersect = max(self.y, notself.y)
+            w_intersect = x_overlap
+            h_intersect = y_overlap
+            return Rectangle(x_intersect, y_intersect, w_intersect, h_intersect)
+    
+    def get_x(self):
+        return self.x
+    
+    def get_y(self):
+        return self.y
+    
+    def get_w(self):
+        return self.w
+    
+    def get_h(self):
+        return self.h
+
+# Проверка
+rect1 = Rectangle(0, 0, 10, 10) 
+rect2 = Rectangle(0, 0, 10, 15) 
+rect3 = rect1.intersection(rect2) 
+if rect3 is None: 
+    print('Нет пересечений') 
+else: 
+    print(rect3.get_x(), rect3.get_y(), rect3.get_w(), rect3.get_h())
