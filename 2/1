@@ -1,0 +1,11 @@
+def AO(operation):
+  if operation == '+':
+    return lambda x, y: x + y
+  if operation == '-':
+    return lambda x, y: x - y
+  if operation == '/':
+    return lambda x, y: x / y
+  if operation == '*':
+    return lambda x, y: x * y
+f = AO('*')
+print(f(3,4))
