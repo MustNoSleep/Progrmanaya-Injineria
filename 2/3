@@ -1,0 +1,32 @@
+def roman(alphabet):
+  global one, two, three
+  RomanOne = ''
+  RomanTwo = ''
+  RomanThree = ''
+  three = one + two
+  while one > 0:
+    for i in RomanNumber:
+      while one >= RomanNumber[i]:
+        RomanOne += i
+        one -= RomanNumber[i]
+  while two > 0:
+    for i in RomanNumber:
+      while two >= RomanNumber[i]:
+        RomanTwo += i
+        two -= RomanNumber[i]
+  while three > 0:
+    for i in RomanNumber:
+      while three >= RomanNumber[i]:
+        RomanThree += i
+        three -= RomanNumber[i]
+  one = RomanOne 
+  two = RomanTwo
+  three = RomanThree
+  print(one, " + ", two, " = ", three)
+one = 5
+two = 7
+global three
+RomanNumber = {'M': 1000, 'CM': 900, 'D': 500, 'CD': 400, 'C': 100, 'XC': 90, 'L': 50, 'XL': 40, 'X': 10, 'IX': 9, 'V': 5, 'IV': 4, 'I': 1}
+# V + VII = XII
+
+print(roman(RomanNumber))
