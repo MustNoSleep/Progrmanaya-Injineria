@@ -1,0 +1,21 @@
+def same_by(characteristic, objects):
+  if len(objects) == 0:
+    return True
+  first_value = characteristic(objects[0])
+  for obj in objects:
+    if characteristic(obj) != first_value:
+      return False
+  return True
+
+values1 = [0, 9, 10, 6, 7]
+values2 = [10, 20, 30]
+
+if same_by(lambda x: x % 10, values1):
+    print('same')
+else:
+    print('different')
+
+if same_by(lambda x: x % 10, values2):
+    print('same')
+else:
+    print('different')
