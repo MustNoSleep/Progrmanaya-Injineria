@@ -1,0 +1,14 @@
+def is_palindrome(data):
+    data = data.lower().replace(' ', '')
+
+    if data == data[::-1]:
+        return True
+    else:
+        return False
+
+string = input('Введите строку: ')
+
+if is_palindrome(string):
+    print('YES')
+else:
+    print('NO')
