@@ -1,0 +1,46 @@
+class SeaMap:
+    def __init__(self):
+        self.map = [['.' for _ in range(10)] for _ in range(10)]
+
+    def sinking(self, row, col):
+        self.map[row][col] = 'sink'
+        if self.map[row][col] == 'hit':
+            self.map[row][col] = 'sink'
+        for i in range(-1,2):
+            for j in range(-1,2):
+                if self.map[row + i][col + j] == '.':
+                    self.map[row + i][col + j] = '*'
+                if self.map[row + i][col + j] == 'hit':
+                    self.sinking(row + i, col + j)
+
+    def shoot(self, row, col, result):
+        if result == 'hit':
+            self.map[row][col] = 'hit'
+        elif result == 'sink':
+            self.sinking(row, col)
+
+    def cell(self, row, col):
+        if self.map[row][col] == 'hit':
+            return 'x'
+        elif self.map[row][col] == 'sink':
+            return 'X'
+        elif self.map[row][col] == '*':
+            return '*'
+        else:
+            return '.'
+
+
+sm = SeaMap()
+sm.shoot(2, 2, 'hit')
+sm.shoot(2, 3, 'hit')
+sm.shoot(2, 4, 'sink')
+sm.shoot(5, 3, 'hit')
+sm.shoot(6, 3, 'hit')
+sm.shoot(7, 3, 'sink')
+sm.shoot(5, 8, 'hit')
+
+sm.shoot(8, 8, 'sink')
+for row in range(10):
+    for col in range(10):
+        print(sm.cell(row, col), end='')
+    print()
