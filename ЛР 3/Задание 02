@@ -1,0 +1,90 @@
+class Left_Par:
+    def __init__(self, width):
+        self.width = width
+        self.temp = ""
+        self.spisok = []
+
+    def add_word(self, word):
+        if len(self.temp) + len(word) < (self.width):
+            self.temp += word
+            self.temp += " "
+        elif len(self.temp) + len(word) == (self.width):
+            self.temp += word
+            self.spisok.append(self.temp)
+            self.temp = ""
+        else:
+            while (len(self.temp) < self.width):
+                self.temp += " "
+            self.spisok.append(self.temp)
+            self.temp = ""
+            self.temp += word
+            if len(self.temp) == self.width:
+                pass
+            else:
+                self.temp +=" "
+
+    def end(self):
+        while (len(self.temp) < self.width):
+            self.temp += " "
+        self.spisok.append(self.temp)
+        for i in self.spisok:
+            print(i)
+        self.spisok.clear()
+
+class Right_Par:
+    def __init__(self, width):
+        self.width = width
+        self.temp = ""
+        self.spisok = []
+
+    def add_word(self, word):
+        if self.temp == "":
+            self.temp += word
+        elif self.temp != "" and len(self.temp) + len(word) < self.width:
+            self.temp += " "
+            self.temp += word
+        elif self.temp != "" and len(self.temp) + len(word) >= self.width:
+            while (len(self.temp) < self.width):
+                self.temp = " " + self.temp
+            self.spisok.append(self.temp)
+            self.temp = ""
+            self.temp += word    
+
+    def end(self):
+        while (len(self.temp) < self.width):
+            self.temp = " " + self.temp
+        self.spisok.append(self.temp)
+        for i in self.spisok:
+            print(i)
+        self.spisok.clear()
+
+LP = Left_Par(9)
+LP.add_word("ac")
+LP.add_word("a")
+LP.add_word("a")
+LP.add_word("1")
+LP.add_word("efcg")
+LP.add_word("abc")
+LP.add_word("568111")
+LP.add_word("123456")
+LP.add_word("123456")
+
+LP.end()
+print()
+
+RP = Right_Par(9)
+RP.add_word("ac")
+RP.add_word("a")
+RP.add_word("a")
+RP.add_word("1")
+RP.add_word("efcg")
+RP.add_word("abc")
+RP.add_word("56811")
+RP.add_word("a")
+RP.add_word("123456")
+RP.add_word("a")
+RP.add_word("123456")
+RP.add_word("5681")
+RP.add_word("a")
+
+RP.end()
