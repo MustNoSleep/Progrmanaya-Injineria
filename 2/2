@@ -1,0 +1,7 @@
+def xd(operation, values):
+  b = list(map(operation , values))
+  print(b)
+a = [1, 2, 3, 4, 5]
+f = lambda x: x * x
+xd(f, a)
+
