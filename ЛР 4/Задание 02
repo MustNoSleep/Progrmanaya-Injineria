@@ -1,0 +1,42 @@
+Keyboard = ["`1234567890-=", "ё1234567890-=", "qwertyuiop[]", "йцукенгшщзхъ",
+"asdfghjkl;'\\", "фывапролджэ\\", "zxcvbnm,./", "ячсмитьбю."]
+
+class PasswordError(Exception):
+    pass
+
+class LengthError(PasswordError):
+    pass
+
+class LetterError(PasswordError):
+    pass
+
+class DigitError(PasswordError):
+    pass
+
+class SequenceError(PasswordError):
+    pass
+
+class Password:
+    def check_password(self, password):
+        if len(password) < 9:
+            raise LengthError("Пароль должен содержать хотябы 9 символов")
+        
+        if not (any(i.isupper() for i in password) and any(i.islower() for i in password)):
+            raise LetterError("Пароль должен содержать как большие так и маленькие буквы")
+        
+        if not any(i.isdigit() for i in password):
+            raise DigitError("В пароле должны содержаться цифры")
+        
+        for poloska in Keyboard:
+                for i in range(len(password) - 2):
+                    if password[i:i+3].lower() in poloska:
+                        raise SequenceError("Пароль не должен быть простым")
+        
+        return "ok"
+
+a = Password()
+
+try:
+    print(a.check_password("Dasswedc13"))
+except PasswordError as e:  # обращение к исключению как к объекту
+    print(f"Произошла ожидаемая ошибка: {e}.")
