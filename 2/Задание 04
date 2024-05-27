@@ -1,0 +1,26 @@
+all_transaction_name = []
+transaction_sum = []
+transaction_counts = []
+
+def get_transactions(argument):
+  global all_transaction_name, transaction_sum, transaction_counts
+  if argument == 'print_it':
+    for i in range(len(all_transaction_name)):
+      print(f"{transaction_counts[i]} {all_transaction_name[i]} {transaction_sum[i]}")
+  else:
+    parts = argument.split(':')#[0]'номер-название' и [1]'сумма'
+    current_transaction_name = parts[0].split('-')[1]#[0]'номер' и [1]'название'
+    amount = int(parts[1])
+    if current_transaction_name in all_transaction_name:
+      index = all_transaction_name.index(current_transaction_name)
+      transaction_sum[index] += amount
+      transaction_counts[index] += 1
+    else:
+      all_transaction_name.append(current_transaction_name)
+      transaction_sum.append(amount)
+      transaction_counts.append(1)
+get_transactions('2931884-перевод:400')
+get_transactions('1214141424124-перевод:400')
+get_transactions('88005553535-оплата_ЖКХ:1400')
+get_transactions('2931884-подарок:20')
+get_transactions('print_it')
