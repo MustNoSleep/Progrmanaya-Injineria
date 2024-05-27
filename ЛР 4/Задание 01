@@ -1,0 +1,40 @@
+print("Создайте свой пароль", "Критерии:",
+"Длина пароля больше 8 символов",
+"В нем присутствуют большие и маленькие буквы любого алфавита",
+"В нем имеется хотя бы одна цифра",
+"В пароле нет ни одной комбинации из 3 буквенных символов, стоящих",
+"рядом в строке клавиатуры независимо от того, русская раскладка выбрана",
+"или английская","", sep="\n")
+
+Keyboard = ["`1234567890-=", "ё1234567890-=", "qwertyuiop[]", "йцукенгшщзхъ",
+"asdfghjkl;'\\", "фывапролджэ\\", "zxcvbnm,./", "ячсмитьбю."]
+
+class Password:
+    def check(self, password):
+        if len(password) < 8:
+            #Пароль должен быть больше 8 символов
+            return("error")
+
+        if not (any(i.isupper() for i in password) and any(i.islower() for i in password)):
+            #Пароль должен содержать как большие так и маленькие буквы
+            return("error")
+
+        if not any(char.isdigit() for char in password):
+            #В пароле должны содержаться цифры
+            return("error")
+
+        for poloska in Keyboard:
+            for i in range(len(password) - 2):
+                if password[i:i+3].lower() in poloska:
+                    #Пароль не должен быть простым
+                    return("error")
+
+        return("ok")
+
+a = Password()
+
+print(a.check("adqeZ1"))
+print(a.check("abcdefghi"))
+print(a.check("ABCDefghi"))
+print(a.check("ABCD111abcdFGh"))
+print(a.check("ABC1313edf"))
