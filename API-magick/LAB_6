@@ -1,1 +1,44 @@
-техработы, плохая связь, пшпшпш
+import requests
+import random
+import time
+
+cities = [
+    {"name": "Москва", "coordinates": "37.6173,55.7558"},
+    {"name": "Санкт-Петербург", "coordinates": "30.3158,59.9343"},
+    {"name": "Новосибирск", "coordinates": "82.9211,55.0084"},
+    {"name": "Екатеринбург", "coordinates": "60.6103,56.8389"},
+    {"name": "Казань", "coordinates": "49.0661,55.8304"},
+]
+
+def get_map_image(city_coordinates):
+    map_type = random.choice(["map", "satellite"])
+    url = f"http://static-maps.yandex.ru/1.x/={city_coordinates}&spn=0.1,0.1&l={map_type}"
+    
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        return response.content
+    else:
+        print("Ошибка при получении карты:", response.status_code)
+        return None
+
+def show_images():
+    random.shuffle(cities)
+    
+    for city in cities:
+        print(f"Угадай город")
+        image_data = get_map_image(city["coordinates"])
+        
+        if image_data:
+            with open(f"{city['name']}.png", 'wb') as f:
+                f.write(image_data)
+            print(f"Изображение сохранено как {city['name']}.png")
+            time.sleep(3)
+            
+            user_guess = input("Ваш ответ: ")
+            if user_guess.strip().lower() == city["name"].lower():
+                print("Угадал")
+            else:
+                print(f"Не угадал, {city['name']}")
+                
+show_images()
