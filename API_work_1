@@ -1,0 +1,37 @@
+import requests
+import cv2
+import numpy as np
+    
+stadiums_location = {"Лужники": "37.554191,55.715551",
+                     "Спартак": "37.440262,55.818015",
+                     "Динамо": "37.559809,55.791540"
+                     }
+api_server = "http://static-maps.yandex.ru/1.x/"
+
+params = {
+"spn": "0.1,0.1",
+"l": "map",
+"size": "650,450",
+}
+
+def addmark(stadiums):
+    results = []
+    for stadium, coords in stadiums.items():
+        results.append(coords)
+    return results
+
+marks = addmark(stadiums_location)
+
+params["pt"] = "~".join(marks)
+
+response = requests.get(api_server, params=params)
+
+if response.status_code == 200:
+    image_array = np.asarray(bytearray(response.content), dtype=np.uint8)
+
+    image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+
+    cv2.imshow('Map', image)
+    cv2.waitKey(0)
+else:
+    print("Ошибка при загрузке изображения:", response.status_code)
