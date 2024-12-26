@@ -6,7 +6,7 @@ params = {
     "geocode": f'{latitude},{longitude}',
     "format": "json",
     "kind": "district",
-    "apikey": "9502d292-d0b6-4177-bbb7-1c6e81c89ce8"
+    "apikey": "0d997e8f-b415-4fd0-91b1-c9547916c893"
 }
 
 adris = input("Введите адрес: ")
