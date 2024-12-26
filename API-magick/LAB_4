@@ -1,6 +1,6 @@
 import requests
 
-api_server = f"https://geocode-maps.yandex.ru/1.x/"
+url = f"https://geocode-maps.yandex.ru/1.x/"
 
 params = {
     "geocode": "",
@@ -8,7 +8,7 @@ params = {
     "apikey": "0d997e8f-b415-4fd0-91b1-c9547916c893"
 }
 
-response = requests.get(api_server, params=params).json()
+response = requests.get(url, params=params).json()
 
 def process_city_input():
     user_input = input("Введите города через пробел: ")
