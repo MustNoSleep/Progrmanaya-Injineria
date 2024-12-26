@@ -1,0 +1,50 @@
+import requests
+
+url = f"https://geocode-maps.yandex.ru/1.x/"
+
+params = {
+    "geocode": f'{latitude},{longitude}',
+    "format": "json",
+    "kind": "district",
+    "apikey": "9502d292-d0b6-4177-bbb7-1c6e81c89ce8"
+}
+
+adris = input("Введите адрес: ")
+latitude, longitude = map(float, adris.split(','))
+
+response = requests.post(url, params=params)
+
+def get_coordinates(address):
+    if response.status_code == 200:
+        data = response.json()
+        if data:
+            return data[0]['geo_lat'], data[0]['geo_lon']
+    else:
+        print(f"Ошибка вида{response.status_code}")
+        return None
+
+def get_district(lat, lon):
+    if response.status_code == 200:
+        data = response.json()
+        if 'response' in data and 'GeoObjectCollection' in data['response']:
+            features = data['response']['GeoObjectCollection']['featureMember']
+            if features:
+                return features[0]['GeoObject']['name']
+    else:
+        print(f"Ошибка вида{response.status_code}")
+        return None
+
+coordinates = get_coordinates(adris)
+
+if coordinates:
+    lat, lon = coordinates
+    print(f"Координаты для адреса '{adris}': Широта: {lat}, Долгота: {lon}")
+    
+    district = get_district(lat, lon)
+    
+    if district:
+        print(f"Район: {district}")
+    else:
+        print("Не удалось определить район.")
+else:
+    print("Не удалось получить координаты.")
