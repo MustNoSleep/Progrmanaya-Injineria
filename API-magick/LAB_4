@@ -1,0 +1,38 @@
+import requests
+
+api_server = f"https://geocode-maps.yandex.ru/1.x/"
+
+params = {
+    "geocode": "",
+    "format": "json",
+    "apikey": "0d997e8f-b415-4fd0-91b1-c9547916c893"
+}
+
+response = requests.get(api_server, params=params).json()
+
+def process_city_input():
+    user_input = input("Введите города через пробел: ")
+
+    user_input = user_input.lower()
+    
+    cityes = user_input.split()
+    
+    formatted_cityes = [city.capitalize() for city in cityes]
+  
+    return formatted_cityes
+
+def find(cityes):
+    most_south = ""
+    min_lat = 1000
+
+    for city in cityes:
+        params["geocode"] = city
+        coords = response['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']['pos']
+        lon, lat = map(float, coords.split())
+        if lat < min_lat:
+            most_south = city
+            min_lat = lat
+
+    print(f"Самый южный город: {most_south}")
+
+find(process_city_input())
