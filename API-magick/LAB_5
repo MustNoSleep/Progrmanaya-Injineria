@@ -1,0 +1,41 @@
+import requests
+
+geocode_url = "https://geocode-maps.yandex.ru/1.x/"
+search_url = "https://search-maps.yandex.ru/v1/"
+
+adris = input("Введите адрес: ")
+latitude, longitude = map(float, adris.split(','))
+
+geocode_params = {
+    "geocode": "",
+    "format": "json",
+    "apikey": "0d997e8f-b415-4fd0-91b1-c9547916c893",
+}
+
+search_params = {
+    "ll": f"{latitude},{longitude}",
+    "apikey": "6c058cdf-afa0-40e6-8d9f-740452796714",
+    "text": "аптека",
+    "type": "biz",
+    "lang": "ru_RU",
+    "results": 5,
+}
+
+geocode_response = requests.get(geocode_url, params=geocode_params).json()
+search_response = requests.get(search_url, params=search_params).json()
+
+def apteka(adris):
+    point = geocode_response['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']['pos']
+    
+    coords = tuple(map(float, point.split()))
+    print(f"Координаты адреса: {coords}")
+
+    if 'features' in search_response and search_response['features']:
+        pharmacy = search_response['features'][0]
+        name = pharmacy['properties']['CompanyMetaData']['name']
+        adris = pharmacy['properties']['CompanyMetaData'].get('adris', 'Адрес не указан')
+        print(f"Ближайшая аптека {name} по адресу {adris}")
+    else:
+        print("Ошибка")
+
+apteka(adris)
